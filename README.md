@@ -35,7 +35,7 @@
 We are first given a simple image like:
 
 <p align="center">
-  <img src="data/sample_input/buttefly.jpg" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
+  <img src="data/sample_input/butterfly.jpg" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
 The borders coordinates are detected using pixel-value histograms along dimensions x and y. The coordinates are then saved so that we can perform appropriate cropping
