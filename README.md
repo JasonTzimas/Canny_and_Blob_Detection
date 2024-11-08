@@ -1,4 +1,4 @@
-# Image Colorization and Morphological filtering based Instance Segmentation
+# Canny Edge Detection and Blob Detection
 
 <p align="center">
   <img src="Images/OpenCV_logo_no_text.png" alt="Image description" width="300" height="300">
@@ -9,38 +9,33 @@
 
 ## Description
 1. **_PartA_:**
-  Educational Code that implements Image colorization from scratch by first cropping 3 images of different channels from a single image, aligns them using Normalized Cross Correlation (NCC) and then combines them in different permutations to give the final RGB Image.
+  Canny Edge Detection from scratch
 
 2. **_PartB_:**
-  Educational Code that implements Instance Segmentations of multiple well separated objects within an image. The first part of the process is to perform [Otsu's thresholding](https://en.wikipedia.org/wiki/Otsu%27s_method) to get a first segmentation of the objects. Then, morphological filtering is performed to fill any holes/gaps and refine edges. Finally, a Connected-Components Algorithm returns the separated object instance masks.
+   Blob Detection at different scales and rejection of Harris Corners.
  
 
 
 ## Table of Contents
 - [Part A](#Part_A)
-  - [Frame Detection](#frame-detection)
-  - [Template Matching and Normalized Cross Correlation (NCC)](#template-matching-and-normalized-cross-correlation-ncc)
-  - [Results](#results)
+  - [Sobel Filters and Convolutions](#sobel-filters-and-convolutions)
+  - [Non-Maxima-Supression](#non-maxima-supression)
+  - [Canny Algorithm](#canny-algorithm)
   - [Installation](#installation)
   - [Execution](#execution)
 - [Part B](#part-b)
-  - [An Input Sample](#an-input-sample)
-  - [Otsu's thresholding](#otsus-thresholding)
-  - [Morphological Filtering](#morphological-filtering)
-  - [Connected Components](#connected-components)
-  - [Hue moments, dominant orientations and Centroids](#hue-moments-dominant-orientations-and-centroids)
+  - [Difference of Gaussians](#difference-of-gaussians)
+  - [Non-Maxima-Supression Across Scales](#non-maxima-supression-across-scales)
 - [License](#license)
 
 ## Part_A
 
-### Frame Detection
+### Sobel Filters and Convolutions
 
-The input images are of the following form:
+We are first given a simple image like:
 
 <p align="center">
-  <img src="Part_A/InputImages/01112v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
-  <img src="Part_A/InputImages/00125v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
-  <img src="Part_A/InputImages/00149v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
+  <img src="data/sample_input/buttefly.jpg" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
 The borders coordinates are detected using pixel-value histograms along dimensions x and y. The coordinates are then saved so that we can perform appropriate cropping
