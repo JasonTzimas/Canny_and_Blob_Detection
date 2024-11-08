@@ -62,40 +62,13 @@ $$
 
 </div>
 
-### Template Matching and Normalized Cross Correlation (NCC)
+### Non-Maxima-Supression
 
-After having cropped the images we perform zero-padding and we get the matching coordinates by finding the maximum NCC score while sliding one image on top of the other across x-y axes.
+Having performed the convolutions we then extract the gradient magnitudes and orientations and non-maxima-supression is performed where only local gradient maximum pixels are kept along the orientation of the gradient. This leads to the following output:
 
-For a given alignment the NCC metric is given by:
-
-<div align="center" style="font-size: 20px;">
-
-$$
-NCC = \sum_{i=1}^{W} \sum_{j=1}^{H} \frac{I_1(i, j) - \mu_1}{\sigma_1} * \frac{I_2(i, j) - \mu_2}{\sigma_2}
-$$
-
-</div>
-
-, where: 
-<div align="center" style="font-size: 12px;">
-  
-$$
-H, W: \text{are the image Height and Width}
-$$
-
-</div>
-
-<div align="center" style="font-size: 12px;">
-  
-$$I_1, I_2: \text{are the two Images}$$
-
-</div>
-
-<div align="center" style="font-size: 12px;">
-  
-$$ \mu_1, \mu_2, \sigma_1, \sigma_2: \text{are the two Image mean and std values}$$
-
-</div>
+<p align="center">
+  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
+</p>
 
 ### Results
 
