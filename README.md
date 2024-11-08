@@ -57,7 +57,7 @@ One can get the gradient magnitude at any given point using the following formul
 <div align="center" style="font-size: 12px;">
   
 $$
-magn_{i,j} = \sqrt{\frac{dI}{dx}_{i,j}^2 + \frac{dI}{dy}_{i,j}}
+magn_{i,j} = \sqrt{{\frac{dI}{dx}_{i,j}}^2 + {\frac{dI}{dy}_{i,j}}^2}
 $$
 
 </div>
