@@ -43,6 +43,13 @@ Then, we want to convolve the image with SobelX and SobelY filters to acquire th
 <p align="center">
   <img src="Outputs/derivatives.png" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
 </p>
+
+After we apply the convolutions we acquire the feature maps which are of the following form:
+
+<p align="center">
+  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
+</p>
+
 ### Template Matching and Normalized Cross Correlation (NCC)
 
 After having cropped the images we perform zero-padding and we get the matching coordinates by finding the maximum NCC score while sliding one image on top of the other across x-y axes.
