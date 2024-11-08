@@ -158,11 +158,11 @@ The application of these kernels at different scales leads to the following feat
   <img src="Outputs/einstein.png" alt="Image description"  width="600">
 </p>
 
-### Otsu's thresholding
+### Non-Maxima-Supression Across Scales
 
-The first part of instance segmentation is using Otsu's thresholding method to get a pixel-intensity threshold, fine tuned in a way that leads to maximum cluster separation
+Having identified the blob feature maps, we perform non-maxima-supression across scales by comparing a pixel against all 28 neighboring pixels in the surrounding 3x3x3 cube of the stacked feature maps.
 
-The output image after perform Otsu's thresholding is the following:
+
 
 <p align="center">
   <img src="Images/thresh_otsus.png" alt="Image description"  height="300">
