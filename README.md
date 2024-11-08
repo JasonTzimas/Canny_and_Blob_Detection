@@ -165,35 +165,7 @@ Having identified the blob feature maps, we perform non-maxima-supression across
 This leads to the following detected blobs with their corresponding scale represented by a circle of a proportional radius:
 
 <p align="center">
-  <img src="Outputs/einstein_blobs.png" alt="Image description"  width="600">
-</p>
-
-### Morphological Filtering
-
-We then perform Morphological filtering by means of erosion and dilation to fill in any holes and give the thresholded values a high connectivity. The result of the above filtering process is as follows:
-
-<p align="center">
-  <img src="Images/Binary_after.png" alt="Image description"  height="300">
-</p>
-
-### Connected Components
-
-Then, a connected-component algorithm using either 4-connectivity or 8-connectivity kernels is implemented to identify the distinct objects present in the image, leading to the following masks:
-
-<p align="center">
-  <img src="Images/labeled_image.png" alt="Image description"  height="300">
-</p>
-
-<p align="center">
-  <img src="Images/labeled_vs_original.png" alt="Image description"  height="300">
-</p>
-
-### Hue moments, dominant orientations and Centroids
-
-Hue moments are used to identify the main object axes and centroids as follows:
-
-<p align="center">
-  <img src="Images/centroids_rotations.png" alt="Image description"  height="300">
+  <img src="Outputs/blobs_einstein.png" alt="Image description"  width="600">
 </p>
 
 
@@ -238,11 +210,11 @@ Then, activate your environment:
 
 Run:
 ```bash
-python instance_segmentation.py PartB/can.jpg <your_output_folder>
+python blob_detection.py data/sample_input/einstein.jpg <your_output_folder>
 ```
 To reproduce the result above or
 
 ```bash
-python instance_segmentation.py path/to/your/image output_folder_name
+python blob_detection.py path/to/your/image output_folder_name
 ```
 if you want to provide your own image.
