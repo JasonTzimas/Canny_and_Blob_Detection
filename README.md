@@ -145,7 +145,7 @@ Blob detection aims at detecting distinct feature-rich points in an image, while
 Let's say we have the following input image of Einstein:
 
 <p align="center">
-  <img src="data/sample_inputs/einstein.jpg" alt="Image description"  height="300">
+  <img src="data/sample_input/einstein.jpg" alt="Image description"  height="300">
 </p>
 
 ### Difference of Gaussians
@@ -155,7 +155,7 @@ To extract and detect blobs a difference of gaussians (DoG) or Laplacian kernel 
 The application of these kernels at different scales leads to the following feature maps:
 
 <p align="center">
-  <img src="Outputs/einstein.png" alt="Image description"  height="300">
+  <img src="Outputs/einstein.png" alt="Image description"  width="600">
 </p>
 
 ### Otsu's thresholding
