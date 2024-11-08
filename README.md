@@ -162,10 +162,10 @@ The application of these kernels at different scales leads to the following feat
 
 Having identified the blob feature maps, we perform non-maxima-supression across scales by comparing a pixel against all 28 neighboring pixels in the surrounding 3x3x3 cube of the stacked feature maps.
 
-
+This leads to the following detected blobs with their corresponding scale represented by a circle of a proportional radius:
 
 <p align="center">
-  <img src="Images/thresh_otsus.png" alt="Image description"  height="300">
+  <img src="Outputs/einstein_blobs.png" alt="Image description"  width="600">
 </p>
 
 ### Morphological Filtering
