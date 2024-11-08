@@ -50,6 +50,18 @@ After we apply the convolutions we acquire the feature maps which are of the fol
   <img src="Outputs/Sobel_filter.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
+Note that one filter triggers on Vertical edges and the other on Horizontal.
+
+One can get the gradient magnitude at any given point using the following formula:
+
+<div align="center" style="font-size: 12px;">
+  
+$$
+magn_{i,j} = \sqrt{\frac{dI}{dx}_{i,j}^2 + \frac{dI}{dy}_{i,j}}
+$$
+
+</div>
+
 ### Template Matching and Normalized Cross Correlation (NCC)
 
 After having cropped the images we perform zero-padding and we get the matching coordinates by finding the maximum NCC score while sliding one image on top of the other across x-y axes.
