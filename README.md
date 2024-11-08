@@ -70,6 +70,21 @@ Having performed the convolutions we then extract the gradient magnitudes and or
   <img src="Outputs/non_maxima_supression.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
+### Canny Algorithm
+
+The Canny Edge detection algorithm takes an input image, performs Sobel convolutions and non-maxima-supression to extract candidate edges and then categorizes the edge pixels based on their gradient magnitude into three categories:
+
+1. Definitely Edges (magn > t2)
+2. Candidate Edges (t1 < magn <= t2)
+3. Not Edges (magn < t1)
+
+Finally, it performs a connected component analysis to keep only those edges that have at least one pixel belonging to category 1.
+
+A sample output of the Canny Edge detector on the input butterfly image is as follows:
+
+<p align="center">
+  <img src="Outputs/canny_butterfly.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
+</p>
 ### Results
 
 Having found the matching image coordinates we append them together to from a single RGB 3-Channel Image. A sample results is as follows:
