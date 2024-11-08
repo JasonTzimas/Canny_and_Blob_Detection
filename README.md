@@ -1,26 +1,239 @@
-# fMoW-Sentinel metadata
+# Image Colorization and Morphological filtering based Instance Segmentation
 
-The fMoW-Sentinel dataset consists of Sentinel-2 satellite image time series corresponding to locations from the Functional Map of the World (fMoW) dataset.   
+<p align="center">
+  <img src="Images/OpenCV_logo_no_text.png" alt="Image description" width="300" height="300">
+</p>
 
-## Dataset information
-Each image contains 13 bands, corresponding to the 13 bands of Sentinel-2, in order of increasing wavelength (B1, B2, B3, B4, B5, B6, B7, B8A, B8B, B9, B10, B11, B12). B4, B3, and B2 correspond to red, green, and blue, respectively. Some images that failed to download have a single null band; these images are filtered out from the metadata csv files.  
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/username/project/actions)
 
-The time series for each location is constructed as follows: First, all fMoW image times before 2015-07-01 (close to the start date of Sentinel-2) are removed. If the location has no fMoW images after this filtering, the location is removed. Then, to increase the number of datapoints per location, for each of the 9 6-month intervals from 2015-07-01 to 2019-12-31, a new timestamp is placed at the midpoint of the interval if there is no fMoW image in that interval, effectively making each time series at least 9 images in length; since some images fail to download, time series may be somewhat shorter after filtering them out. For each of the times within the time series, a Sentinel-2 cloud composite is constructed over the interval from 45 days before to 45 days after the image time.
+## Description
+1. **_PartA_:**
+  Educational Code that implements Image colorization from scratch by first cropping 3 images of different channels from a single image, aligns them using Normalized Cross Correlation (NCC) and then combines them in different permutations to give the final RGB Image.
 
-## Metadata fields
-- `category`: fMoW category of the image
-- `location_id`: Numerical id for which location the image belongs to (within its category), taken directly from fMoW
-- `image_id`: Numerical id for the image within its location. `image_id` >= 100 indicates that the image has no corresponding fMoW image, while any `image_id` < 100 is taken directly from fMoW
-- `timestamp`: Center time of the image composite interval, formatted as `YYYY-MM-DDThh:mm:ssZ` (where T and Z are the literal letters)
-- `polygon`: Set of coordinates specifying the lat/long of the corners of the image location
+2. **_PartB_:**
+  Educational Code that implements Instance Segmentations of multiple well separated objects within an image. The first part of the process is to perform [Otsu's thresholding](https://en.wikipedia.org/wiki/Otsu%27s_method) to get a first segmentation of the objects. Then, morphological filtering is performed to fill any holes/gaps and refine edges. Finally, a Connected-Components Algorithm returns the separated object instance masks.
+ 
 
-## Splits
-- `train.csv`: Corresponds to locations in the fMoW train set
-- `val.csv`: Corresponds to locations in the fMoW validation set
-- `test_gt.csv`: Corresponds to locations in the fMoW test set
 
-## Image path
-The path to a given file is `<split>/<category>/<category_image_id>/<category>_<image_id>_<location_id>.tif`. For example, `train/airport/airport_0/airport_0_6.tif`.
+## Table of Contents
+- [Part A](#Part_A)
+  - [Frame Detection](#frame-detection)
+  - [Template Matching and Normalized Cross Correlation (NCC)](#template-matching-and-normalized-cross-correlation-ncc)
+  - [Results](#results)
+  - [Installation](#installation)
+  - [Execution](#execution)
+- [Part B](#part-b)
+  - [An Input Sample](#an-input-sample)
+  - [Otsu's thresholding](#otsus-thresholding)
+  - [Morphological Filtering](#morphological-filtering)
+  - [Connected Components](#connected-components)
+  - [Hue moments, dominant orientations and Centroids](#hue-moments-dominant-orientations-and-centroids)
+- [License](#license)
 
-## Licensing
-The fMoW-Sentinel dataset is derived from two data sources with their own licenses: The Functional Map of the World Challenge Public License (https://raw.githubusercontent.com/fMoW/dataset/master/LICENSE) applies to the locations and categories of the images in the dataset (i.e. the data in the metadata CSV files), while the Sentinel-2 License (https://scihub.copernicus.eu/twiki/pub/SciHubWebPortal/TermsConditions/Sentinel_Data_Terms_and_Conditions.pdf) applies to the images themselves.
+## Part_A
+
+### Frame Detection
+
+The input images are of the following form:
+
+<p align="center">
+  <img src="Part_A/InputImages/01112v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
+  <img src="Part_A/InputImages/00125v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
+  <img src="Part_A/InputImages/00149v.jpg" alt="Image 1" width="200" style="border: 2px solid black; margin-right: 10px;">
+</p>
+
+The borders coordinates are detected using pixel-value histograms along dimensions x and y. The coordinates are then saved so that we can perform appropriate cropping
+
+### Template Matching and Normalized Cross Correlation (NCC)
+
+After having cropped the images we perform zero-padding and we get the matching coordinates by finding the maximum NCC score while sliding one image on top of the other across x-y axes.
+
+For a given alignment the NCC metric is given by:
+
+<div align="center" style="font-size: 20px;">
+
+$$
+NCC = \sum_{i=1}^{W} \sum_{j=1}^{H} \frac{I_1(i, j) - \mu_1}{\sigma_1} * \frac{I_2(i, j) - \mu_2}{\sigma_2}
+$$
+
+</div>
+
+, where: 
+<div align="center" style="font-size: 12px;">
+  
+$$
+H, W: \text{are the image Height and Width}
+$$
+
+</div>
+
+<div align="center" style="font-size: 12px;">
+  
+$$I_1, I_2: \text{are the two Images}$$
+
+</div>
+
+<div align="center" style="font-size: 12px;">
+  
+$$ \mu_1, \mu_2, \sigma_1, \sigma_2: \text{are the two Image mean and std values}$$
+
+</div>
+
+### Results
+
+Having found the matching image coordinates we append them together to from a single RGB 3-Channel Image. A sample results is as follows:
+
+<p align="center">
+  <img src="Images/rgb55.png" alt="Image description" width="300" height="300">
+</p>
+
+### Installation
+
+First create a virual environment by running:
+
+1. Using _Conda_:
+  ```bash
+  conda create <your_environment_name>
+  ```
+2. Using _venv_
+```bash
+python -m venv <your_environment_name>
+```
+
+Then, activate your environment:
+
+1. Using _Conda_:
+  ```bash
+  conda activate <your_environment_name>
+  ```
+
+2. Using _venv_:
+   ```bash
+   cd <your_environment_name>/bin
+   source ./activate ## For Linux
+   cd ../..
+   ```
+   or
+   ```bash
+    cd <your_environment_name>/Scripts
+    activate  ## For Windows
+    cd ../..
+   ```
+
+ Finally, install the requirements.txt file:
+
+ ```bash
+ pip install -r requirements.txt
+ ```
+
+### Execution
+
+Run:
+```bash
+python get_rgb.py PartA/InputImages/01112v.jpg <your_output_folder>
+```
+To reproduce the result above or
+
+```bash
+python get_rgb.py path/to/your/image output_folder_name
+```
+if you want to provide your own image.
+
+
+## Part B
+
+### An Input sample
+
+<p align="center">
+  <img src="Part_B/can.jpg" alt="Image description"  height="300">
+</p>
+
+### Otsu's thresholding
+
+The first part of instance segmentation is using Otsu's thresholding method to get a pixel-intensity threshold, fine tuned in a way that leads to maximum cluster separation
+
+The output image after perform Otsu's thresholding is the following:
+
+<p align="center">
+  <img src="Images/thresh_otsus.png" alt="Image description"  height="300">
+</p>
+
+### Morphological Filtering
+
+We then perform Morphological filtering by means of erosion and dilation to fill in any holes and give the thresholded values a high connectivity. The result of the above filtering process is as follows:
+
+<p align="center">
+  <img src="Images/Binary_after.png" alt="Image description"  height="300">
+</p>
+
+### Connected Components
+
+Then, a connected-component algorithm using either 4-connectivity or 8-connectivity kernels is implemented to identify the distinct objects present in the image, leading to the following masks:
+
+<p align="center">
+  <img src="Images/labeled_image.png" alt="Image description"  height="300">
+</p>
+
+<p align="center">
+  <img src="Images/labeled_vs_original.png" alt="Image description"  height="300">
+</p>
+
+### Hue moments, dominant orientations and Centroids
+
+Hue moments are used to identify the main object axes and centroids as follows:
+
+<p align="center">
+  <img src="Images/centroids_rotations.png" alt="Image description"  height="300">
+</p>
+
+
+### Installation
+
+First create a virual environment by running:
+
+1. Using _Conda_:
+  ```bash
+  conda create <your_environment_name>
+  ```
+2. Using _venv_
+```bash
+python -m venv <your_environment_name>
+```
+
+Then, activate your environment:
+
+1. Using _Conda_:
+  ```bash
+  conda activate <your_environment_name>
+  ```
+
+2. Using _venv_:
+   ```bash
+   cd <your_environment_name>/bin
+   source ./activate ## For Linux
+   ```
+   or
+   ```bash
+    cd <your_environment_name>/Scripts
+    ./activate  ## For Windows
+   ```
+
+ Finally, install the requirements.txt file:
+
+ ```bash
+ pip install -r requirements.txt
+ ```
+
+### Execution
+
+Run:
+```bash
+python instance_segmentation.py PartB/can.jpg <your_output_folder>
+```
+To reproduce the result above or
+
+```bash
+python instance_segmentation.py path/to/your/image output_folder_name
+```
+if you want to provide your own image.
