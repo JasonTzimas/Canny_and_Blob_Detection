@@ -67,7 +67,7 @@ $$
 Having performed the convolutions we then extract the gradient magnitudes and orientations and non-maxima-supression is performed where only local gradient maximum pixels are kept along the orientation of the gradient. This leads to the following output:
 
 <p align="center">
-  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
+  <img src="Outputs/non_maxima_supression.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
 ### Results
