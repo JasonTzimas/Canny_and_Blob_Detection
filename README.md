@@ -85,13 +85,6 @@ A sample output of the Canny Edge detector on the input butterfly image is as fo
 <p align="center">
   <img src="Outputs/canny_butterfly.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
-### Results
-
-Having found the matching image coordinates we append them together to from a single RGB 3-Channel Image. A sample results is as follows:
-
-<p align="center">
-  <img src="Images/rgb55.png" alt="Image description" width="300" height="300">
-</p>
 
 ### Installation
 
@@ -136,22 +129,33 @@ Then, activate your environment:
 
 Run:
 ```bash
-python get_rgb.py PartA/InputImages/01112v.jpg <your_output_folder>
+python Canny_Edge_detection.py data/sample_input/butterfly.jpg <your_output_folder>
 ```
 To reproduce the result above or
 
 ```bash
-python get_rgb.py path/to/your/image output_folder_name
+python Canny_Edge_detection.py path/to/your/image output_folder_name
 ```
 if you want to provide your own image.
 
 
 ## Part B
 
-### An Input sample
+Blob detection aims at detecting distinct feature-rich points in an image, while also maintaining scale invariance.
+Let's say we have the following input image of Einstein:
 
 <p align="center">
-  <img src="Part_B/can.jpg" alt="Image description"  height="300">
+  <img src="data/sample_inputs/einstein.jpg" alt="Image description"  height="300">
+</p>
+
+### Difference of Gaussians
+
+To extract and detect blobs a difference of gaussians (DoG) or Laplacian kernel is used.
+
+The application of these kernels at different scales leads to the following feature maps:
+
+<p align="center">
+  <img src="Outputs/einstein.png" alt="Image description"  height="300">
 </p>
 
 ### Otsu's thresholding
