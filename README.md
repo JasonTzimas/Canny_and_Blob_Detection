@@ -41,13 +41,13 @@ We are first given a simple image like:
 Then, we want to convolve the image with SobelX and SobelY filters to acquire the gradients along the two dimensions. The Sobel filters are of the following form:
 
 <p align="center">
-  <img src="Outputs/derivatives.png" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
+  <img src="Outputs/derivatives.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
 After we apply the convolutions we acquire the feature maps which are of the following form:
 
 <p align="center">
-  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
+  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="800" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
 ### Template Matching and Normalized Cross Correlation (NCC)
