@@ -38,8 +38,11 @@ We are first given a simple image like:
   <img src="data/sample_input/butterfly.jpg" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
 </p>
 
-The borders coordinates are detected using pixel-value histograms along dimensions x and y. The coordinates are then saved so that we can perform appropriate cropping
+Then, we want to convolve the image with SobelX and SobelY filters to acquire the gradients along the two dimensions. The Sobel filters are of the following form:
 
+<p align="center">
+  <img src="Outputs/Sobel_filter.png" alt="Image 1" width="500" style="border: 2px solid black; margin-right: 10px;">
+</p>
 ### Template Matching and Normalized Cross Correlation (NCC)
 
 After having cropped the images we perform zero-padding and we get the matching coordinates by finding the maximum NCC score while sliding one image on top of the other across x-y axes.
